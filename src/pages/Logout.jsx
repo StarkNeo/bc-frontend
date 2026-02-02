@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import '../components/Navbar.css';
+import '../components/navbar.css';
 import requests from "../services/requests";
 
 export default function Logout({ setToken, setUserId, token }) {
