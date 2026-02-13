@@ -26,6 +26,7 @@ const StatusBalanzas = ({ balanzas }) => {
                         {balanzasPendientes.map((balanza) => (
                             <tr key={balanza.id}>
                                 <td>{balanza.rfc}</td>
+                                <td>{balanza.nombre}</td>
                                 <td>{balanza.mes}</td>
                                 <td>{balanza.ejercicio}</td>
                             </tr>
@@ -53,6 +54,7 @@ const StatusBalanzas = ({ balanzas }) => {
                         {balanzasProcesadas.map((balanza) => (
                             <tr key={balanza.id}>
                                 <td>{balanza.rfc}</td>
+                                <td>{balanza.nombre}</td>
                                 <td>{balanza.mes}</td>
                                 <td>{balanza.ejercicio}</td>
                             </tr>
