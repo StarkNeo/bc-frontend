@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import requests from "../services/requests";
+import "./login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,28 +35,41 @@ export default function Login() {
   };
 
   return (
-    <div className="upload-container">
-      <h1>Iniciar sesión</h1>
+    <div className="auth-container">
+      <div className="auth-brand">
+        <h1>Fiscal Suite</h1>
+        <p>La plataforma inteligente para el control y gestión fiscal-contable.</p>
+      </div>
 
-      <label>Email</label>
-      <input
-        type="email"
-        onChange={e => setEmail(e.target.value)}
-        placeholder="usuario@correo.com"
-      />
+      <div className="auth-form-wrapper">
+        <form className="auth-form">
+          <h2>Iniciar sesión</h2>
 
-      <label>Contraseña</label>
-      <input
-        type="password"
-        onChange={e => setPassword(e.target.value)}
-        placeholder="••••••••"
-      />
+          <input
+            type="email"
+            className="auth-input"
+            placeholder="correo"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-      <button className="upload-btn" onClick={handleLogin}>
-        Continuar
-      </button>
+          <input
+            type="password"
+            className="auth-input"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-      {error && <p className="status-message">{error}</p>}
+          <input type="button" className="auth-btn" onClick={handleLogin} value="Acceder" />
+        </form>
+        {error && <p className="status-message">{error}</p>}
+      </div>
+
+
+
+
+
     </div>
   );
 }

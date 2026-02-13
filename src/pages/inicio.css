@@ -1,61 +1,92 @@
-.inicio-container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem;
-  font-family: "Inter", sans-serif;
-  text-align: center;
+
+
+/* CONTENEDOR GENERAL */
+.dashboard-container {
+  width: 75%;
+  max-width: 100%;
+  margin: auto;
+  padding: 2.5rem;
+  min-height: 100vh;
+  background: #f8fafc;
+  font-family: 'Inter', sans-serif;
 }
 
-.inicio-container h1 {
+/* HEADER */
+.dashboard-header h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #0f172a;
+  margin-bottom: 0.3rem;
 }
 
-.intro-text {
-  margin-top: 0.5rem;
-  color: #6b7280;
+.dashboard-date {
   font-size: 1rem;
+  color: #475569;
+  margin-bottom: 2rem;
 }
 
-.menu-grid {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+/* SECCIONES */
+.dashboard-section {
+  margin-bottom: 2rem;
 }
 
+/* TARJETAS DEL MENU */
 .menu-card {
-  background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 12px;
+  display: block;
+  width: 20%;
+  background: white;
+  padding: 1.8rem;
+  border-radius: 14px;
   text-decoration: none;
-  color: #1f2937;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  border-left: 4px solid #3b82f6;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
 }
 
 .menu-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
 }
 
 .menu-card h3 {
-  margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .menu-card p {
-  font-size: 0.9rem;
-  color: #6b7280;
+  font-size: 0.95rem;
+  color: #475569;
 }
 
-.menu-card.logout {
-  border-left-color: #ef4444;
+/* GRID RESPONSIVE (si agregas más tarjetas en el futuro) */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
 }
 
-.menu-card.logout:hover {
-  box-shadow: 0 6px 20px rgba(239,68,68,0.25);
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1.5rem;
+    width: 100%;
+
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.6rem;
+  }
+
+  
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .menu-card {
+    padding: 1.5rem;
+    width: 50%;
+  }  
+
 }

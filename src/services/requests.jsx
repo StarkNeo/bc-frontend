@@ -8,6 +8,11 @@ const getClients = async () => {
     return request.data
 }
 
+const getBalanzasPending = async () => {
+    const request = await axios.get(`${baseUrl}/balanzas-pending`)
+    return request.data
+}
+
 const uploadExcel = async (file, token) => {
     const request = await axios.post(`${baseUrl}/upload-excel`, file, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } })
     return request.data
@@ -52,4 +57,4 @@ const resetPassword = async (userId, newPassword) => {
 
 
 
-export default { getClients, uploadExcel, logout, fetchQrCode, verify2FASetup, verify2FA, resetPassword, login }
+export default { getClients, uploadExcel, logout, fetchQrCode, verify2FASetup, verify2FA, resetPassword, login, getBalanzasPending }

@@ -8,7 +8,7 @@ export default function App() {
   
   return (
     <>
-      <Navbar token={token} setToken={setToken} setUserId={setUserId} />
+      {token && <Navbar token={token} setToken={setToken} setUserId={setUserId} />}
       <div style={{ padding: "2rem" }}>
         <Outlet context={{ userId, setUserId, token, setToken }} />
       </div>

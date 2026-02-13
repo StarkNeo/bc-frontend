@@ -2,6 +2,7 @@ import { useState, useEffect} from "react";
 import { useOutletContext } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import requests from "../services/requests";
+import './verify2fa.css';
 
 export default function Verify2FA() {
   const [code, setCode] = useState("");
@@ -34,22 +35,25 @@ export default function Verify2FA() {
   };
 
   return (
-    <div className="upload-container">
-      <h1>Verificación MFA</h1>
-
+    <div className="mfa-container">
+      <h1 className="mfa-title">Verificación MFA</h1>
+      <div className="mfa-form">
       <label>Código de autenticación</label>
       <input
         type="text"
         onChange={e => setCode(e.target.value)}
         placeholder="123456"
+        className="mfa-input"
 
       />
+      </div>
+      
 
-      <button className="upload-btn" onClick={handleVerify}>
+      <button className="mfa-btn" onClick={handleVerify}>
         Verificar
       </button>
 
-      {error && <p className="status-message">{error}</p>}
+      {error && <p className="mfa-error">{error}</p>}
     </div>
   );
 }

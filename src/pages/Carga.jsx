@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import requests from "../services/requests";
 import "./carga.css";
-import { useOutletContext } from "react-router-dom";
+import { redirect, useOutletContext, useNavigate } from "react-router-dom";
 
 export const Carga = () => {
   const [file, setFile] = useState(null);
@@ -12,8 +12,9 @@ export const Carga = () => {
   const [month, setMonth] = useState("")
   const [rfc, setRfc] = useState("")
   const [clients, setClients] = useState([])
-  const {token} = useOutletContext();
-  
+  const { token } = useOutletContext();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchClients = async () => {
       const data = await requests.getClients();
@@ -25,7 +26,7 @@ export const Carga = () => {
   let arrayEjercicios = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
 
 
-  
+
   const handleChangeRfc = (event) => {
     setRfc(event.target.value)
   }
@@ -53,6 +54,8 @@ export const Carga = () => {
       const res = await requests.uploadExcel(formData, token);
       setStatus(res.message);
       setRowsInserted(res.rows);
+      alert(`Archivo procesado. ${res.rows} filas insertadas.`);
+      navigate("/inicio");
     } catch (error) {
       console.error(error);
       setStatus('Error al subir o procesar el archivo');
@@ -62,57 +65,67 @@ export const Carga = () => {
   return (
 
     <div className="upload-container">
-      {/*<Logout />*/}
-      <h1>Carga de balanza (Excel → BD)</h1>
 
-      <label htmlFor="cliente">Cliente</label>
-      <select id="cliente" onChange={handleChangeRfc}>
-        <option value="">-------------</option>
-        {clients.map(client => (
-          <option key={client.rfc} value={client.rfc}>
-            {client.nombre}
-          </option>
-        ))}
-      </select>
+      <h1 className="upload-title">Carga de balanza</h1>
 
-      <label htmlFor="ejercicio">Ejercicio</label>
-      <select id="ejercicio" required onChange={e => setYear(e.target.value)}>
-        <option value="0"></option>
-        {arrayEjercicios.map(year => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
+      <div className="upload-form">
 
-      <label htmlFor="mes">Periodo</label>
-      <input
-        type="number"
-        id="mes"
-        min="1"
-        max="12"
-        placeholder="1"
-        title="Captura mes 1 a 12"
-        onChange={e => setMonth(e.target.value)}
-      />
+        <div className="form-group">
+          <label htmlFor="cliente">Cliente</label>
+          <select onChange={handleChangeRfc}>
+            <option value="">-------------</option>
+            {clients.map(client => (
+              <option key={client.rfc} value={client.rfc}>
+                {client.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <label htmlFor="file">Archivo Excel</label>
-      <input
-        type="file"
-        id="file"
-        accept=".xlsx,.xls"
-        onChange={handleFileChange}
-      />
+        <div className="form-group">
+          <label htmlFor="ejercicio">Ejercicio</label>
+          <select id="ejercicio" required onChange={e => setYear(e.target.value)}>
+            <option value="0"></option>
+            {arrayEjercicios.map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+        </div>
 
-      <button className="upload-btn" onClick={handleUpload}>
-        Subir y procesar
-      </button>
+        <div className="form-group">
+          <label htmlFor="mes">Periodo</label>
+          <input
+            type="number"
+            id="mes"
+            min="1"
+            max="12"
+            placeholder="1"
+            title="Captura mes 1 a 12"
+            onChange={e => setMonth(e.target.value)}
+          />
+        </div>
 
-      {status && (
-        <p className="status-message">
-          {status} {rowsInserted != null && ` | Filas insertadas: ${rowsInserted}`}
-        </p>
-      )}
+        <div className="form-group">
+          <label htmlFor="file">Archivo Excel</label>
+          <input
+            type="file"
+            id="file"
+            accept=".xlsx,.xls"
+            onChange={handleFileChange}
+          />
+        </div>
+
+        <button className="upload-btn" onClick={handleUpload}>
+          Subir y procesar
+        </button>
+
+        {status && (
+          <p className="status-message">
+            {status} {rowsInserted != null && ` | Filas insertadas: ${rowsInserted}`}
+          </p>
+        )}
+
+      </div>
     </div>
 
   );

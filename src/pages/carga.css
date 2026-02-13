@@ -1,85 +1,138 @@
+/* CONTENEDOR GENERAL */
 .upload-container {
-  max-width: 600px;
+  width: 30%;
+  max-width: 100%;
   margin: 2rem auto;
+  background: white;
   padding: 2.5rem;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  font-family: "Inter", sans-serif;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
 }
 
-.upload-container h1 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #1a1a1a;
+/* TITULO */
+.upload-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1.8rem;
+  text-align: center;
 }
 
-.logout-btn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  float: right;
-  transition: background 0.2s ease;
-}
-
-.logout-btn:hover {
-  background: #c0392b;
-}
-
-label {
-  display: block;
-  margin-top: 1.2rem;
-  margin-bottom: 0.4rem;
-  font-weight: 500;
-  color: #333;
-}
-
-select,
-input[type="number"],
-input[type="file"] {
+/* FORMULARIO */
+.upload-form {
+  display: flex;
   width: 100%;
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-select:focus,
-input[type="number"]:focus,
-input[type="file"]:focus {
-  border-color: #3498db;
-  outline: none;
-}
-
-button.upload-btn {
-  margin-top: 1.5rem;
+/* GRUPOS */
+.form-group {
   width: 100%;
-  padding: 0.8rem;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-button.upload-btn:hover {
-  background: #217dbb;
-}
-
-.status-message {
-  margin-top: 1.5rem;
-  padding: 0.8rem;
-  background: #f4f6f8;
-  border-left: 4px solid #3498db;
-  border-radius: 4px;
-  color: #333;
+.form-group label {
+  width: 100%;
   font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.4rem;
+}
+
+/* INPUTS Y SELECTS */
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  box-sizing: border-box;
+  background: #f1f5f9;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  text-overflow: hidden;
+}
+
+/* BOTÓN */
+.upload-btn {
+  padding: 0.9rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.25s ease;
+}
+
+.upload-btn:hover {
+  background: #1d4ed8;
+}
+
+/* MENSAJE DE ESTADO */
+.status-message {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #f1f5f9;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .upload-container {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .upload-title {
+    font-size: 1.5rem;
+  }
+  select{
+    font-size: 14px;
+    padding: 10px;
+  }
+  select option{
+    font-size: 10px;
+    text-overflow: ellipsis;
+  }
+
+
+}
+@media(max-width: 376px){
+  .upload-container {
+    width: 90%;
+  }
+  .upload-form{
+    width: 100%;
+    margin: 0%;
+  }
+  .form-group{
+    width: 100%;
+    
+  } 
+  select{
+    width: 100%;
+  }
+  select option{
+    font-size: 6px;
+  }
 }
