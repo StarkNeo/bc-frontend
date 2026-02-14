@@ -1,9 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import requests from "../services/requests";
 import "./login.css";
+import sanitizedValue from "../services/sanitizeInput";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +14,9 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await requests.login(email, password);
+      const sanitizedEmail = sanitizedValue(email);
+      const sanitizedPassword = sanitizedValue(password);
+      const res = await requests.login(sanitizedEmail, sanitizedPassword);
       setUserId(res.data.userId);
       if (res.data.userId && res.data.requiresPasswordReset) {
         navigate("/reset-password", { state: { userId: res.data.userId, email: email } });
@@ -42,7 +44,7 @@ export default function Login() {
       </div>
 
       <div className="auth-form-wrapper">
-        <form className="auth-form">
+        <form className="auth-form" noValidate>
           <h2>Iniciar sesión</h2>
 
           <input
@@ -59,6 +61,7 @@ export default function Login() {
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+
           />
 
           <input type="button" className="auth-btn" onClick={handleLogin} value="Acceder" />

@@ -18,6 +18,7 @@ const StatusBalanzas = ({ balanzas }) => {
                     <thead>
                         <tr>
                             <th>RFC</th>
+                            <th>Nombre</th>
                             <th>Mes</th>
                             <th>Ejercicio</th>
                         </tr>
@@ -46,6 +47,7 @@ const StatusBalanzas = ({ balanzas }) => {
                     <thead>
                         <tr>
                             <th>RFC</th>
+                            <th>Nombre</th>
                             <th>Mes</th>
                             <th>Ejercicio</th>
                         </tr>

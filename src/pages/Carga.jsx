@@ -2,7 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import requests from "../services/requests";
 import "./carga.css";
-import { redirect, useOutletContext, useNavigate } from "react-router-dom";
+import sanitizedValue from "../services/sanitizeInput";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 export const Carga = () => {
   const [file, setFile] = useState(null);
@@ -28,7 +29,7 @@ export const Carga = () => {
 
 
   const handleChangeRfc = (event) => {
-    setRfc(event.target.value)
+    setRfc(sanitizedValue(event.target.value));
   }
 
   const handleFileChange = (e) => {
@@ -57,8 +58,8 @@ export const Carga = () => {
       alert(`Archivo procesado. ${res.rows} filas insertadas.`);
       navigate("/inicio");
     } catch (error) {
-      console.error(error);
-      setStatus('Error al subir o procesar el archivo');
+      setStatus(error);
+      setStatus(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Error subiendo el archivo');
     }
   };
 
@@ -84,7 +85,7 @@ export const Carga = () => {
 
         <div className="form-group">
           <label htmlFor="ejercicio">Ejercicio</label>
-          <select id="ejercicio" required onChange={e => setYear(e.target.value)}>
+          <select id="ejercicio" required onChange={e => setYear(sanitizedValue(e.target.value))}>
             <option value="0"></option>
             {arrayEjercicios.map(year => (
               <option key={year} value={year}>{year}</option>
@@ -99,9 +100,9 @@ export const Carga = () => {
             id="mes"
             min="1"
             max="12"
-            placeholder="1"
+            placeholder="Captura mes 1 a 12"
             title="Captura mes 1 a 12"
-            onChange={e => setMonth(e.target.value)}
+            onChange={e => setMonth(sanitizedValue(e.target.value))}
           />
         </div>
 
@@ -118,7 +119,6 @@ export const Carga = () => {
         <button className="upload-btn" onClick={handleUpload}>
           Subir y procesar
         </button>
-
         {status && (
           <p className="status-message">
             {status} {rowsInserted != null && ` | Filas insertadas: ${rowsInserted}`}

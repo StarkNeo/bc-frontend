@@ -1,7 +1,6 @@
 import axios from 'axios'
 const api = import.meta.env.VITE_API_URL;
 const baseUrl = api;
-console.log("API URL:", baseUrl);
 
 const getClients = async () => {
     const request = await axios.get(`${baseUrl}/clientes`)
