@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import requests from "../services/requests";
 import "./login.css";
-import sanitizedValue from "../services/sanitizeInput";
+import {sanitizedValue,sanitizePassword} from "../services/sanitizeInput";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const sanitizedEmail = sanitizedValue(email);
-      const sanitizedPassword = sanitizedValue(password);
+      const sanitizedPassword = sanitizePassword(password);
       const res = await requests.login(sanitizedEmail, sanitizedPassword);
       setUserId(res.data.userId);
       if (res.data.userId && res.data.requiresPasswordReset) {
