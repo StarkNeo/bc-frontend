@@ -2,28 +2,43 @@ import React from "react";
 import { useState, useEffect } from "react";
 import requests from "../services/requests";
 import './cargaBalanza.css';
-import { sanitizedValue } from "../services/sanitizeInput";
 import { useOutletContext, useNavigate } from "react-router-dom";
 
-const CargaBalanza = ({ rfc, nombre, mes, ejercicio }) => {
+const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
     const [file, setFile] = useState(null);
-    const [status, setStatus] = useState('');
-    const [rowsInserted, setRowsInserted] = useState(null);
+    const [statusMessage, setStatusMessage] = useState(null);
     const { token } = useOutletContext();
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        if(pendiente){
+            setStatusMessage("Pendiente");
 
+        }
+        else{
+            setStatusMessage("Procesada");
+        }
+    }, [pendiente]);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
-        setStatus('');
         setRowsInserted(null);
     };
 
+
     const handleUpload = async () => {
         if (!file) {
-            setStatus('Selecciona un archivo primero');
+            setStatusMessage('Sin documento');
+            setTimeout(() => {
+                setStatusMessage("Fallo al subir");
+            }, 2000);
+            setTimeout(() => {
+                setStatusMessage("Pendiente");
+            }, 6000);
             return;
+
         }
+        
 
         const formData = new FormData();
         formData.append('file', file);
@@ -32,59 +47,72 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio }) => {
         formData.append('rfc', rfc);
 
         try {
-            setStatus('Subiendo y procesando...');
+            setStatusMessage('Procesando...');
             const res = await requests.uploadExcel(formData, token);
-            setStatus(res.message);
-            setRowsInserted(res.rows);
+            setStatusMessage(res.message);
             alert(`Archivo procesado. ${res.rows} filas insertadas.`);
+            setTimeout(() => {
+                setStatusMessage("Procesada");
+            }, 2000);
+            setFile(null);
+            window.location.reload();
             navigate("/inicio");
         } catch (error) {
-            setStatus(error);
-            setStatus(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Error subiendo el archivo');
+            console.log(error);
+            setStatusMessage(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Error subiendo el archivo');
+            setTimeout(() => {
+                setStatusMessage("Pendiente");
+            }, 3000);
         }
+
     };
 
     return (
 
-        <div className="upload-container">
-            <div className="upload-form">
-                <tr>
-                    <td>{rfc}</td>
-                    <td>{nombre}</td>
-                    <td>{mes}</td>
-                    <td>{ejercicio}</td>
+        <tr>
+            <td>
+                <span className={`badge badge-${statusMessage === "Pendiente" ? "pendiente" : "procesada"}`}>{statusMessage}</span>
+            </td>
+            <td>{rfc}</td>
+            <td>{nombre}</td>
+            <td>{mes}</td>
+            <td>{ejercicio}</td>
+            {pendiente && (
+                <>
                     <td>
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <input
+                            type="file"
+                            id="file"
+                            accept=".xlsx,.xls"
+                            onChange={handleFileChange}
+                            
+                        />
+                    </td>
+                    <td>
+                        <svg onClick={handleUpload} width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M3 15a4 4 0 0 1 4-4h1a5 5 0 0 1 10 1h1a3 3 0 0 1 0 6H7" />
                             <path d="M12 11v8" />
                             <path d="M9 14l3-3 3 3" />
                         </svg>
                     </td>
-                </tr>
-                <div className="form-group">
-                    <label htmlFor="file">Archivo Excel</label>
-                    <input
-                        type="file"
-                        id="file"
-                        accept=".xlsx,.xls"
-                        onChange={handleFileChange}
-                    />
-                </div>
+                </>
+            )}
+            
 
 
-                <button className="upload-btn" onClick={handleUpload}>
-                    Subir y procesar
-                </button>
-                {status && (
+            {/* status && (
                     <p className="status-message">
-                        {status} {rowsInserted != null && ` | Filas insertadas: ${rowsInserted}`}
-                    </p>
-                )}
+                    {status} {rowsInserted != null && ` | Filas insertadas: ${rowsInserted}`}
+                </p>*/}
 
-            </div>
-        </div>
 
-    );
+
+
+        </tr>
+
+    )
+
+
 }
 
 export default CargaBalanza;

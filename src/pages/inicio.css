@@ -60,33 +60,19 @@
   color: #475569;
 }
 
-/* GRID RESPONSIVE (si agregas más tarjetas en el futuro) */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.2rem;
-}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 1.5rem;
-    width: 100%;
+    width: 80vw;
 
   }
 
   .dashboard-header h1 {
     font-size: 1.6rem;
   }
-
+  
   
 }
 
-/* RESPONSIVE */
-@media (max-width: 480px) {
-  .menu-card {
-    padding: 1.5rem;
-    width: 50%;
-  }  
-
-}

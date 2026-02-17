@@ -30,7 +30,6 @@ export default function Navbar({ token, setToken, setUserId }) {
       {token && (
         <ul className="nav-links desktop">
           <li><NavLink to="/inicio">Inicio</NavLink></li>
-          <li><NavLink to="/carga">Carga</NavLink></li>
           <li><Logout token={token} setToken={setToken} setUserId={setUserId} /></li>
         </ul>
       )}

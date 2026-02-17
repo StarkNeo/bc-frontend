@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import requests from "../services/requests";
-import { useState, useEffect, use } from "react";
-import StatusBalanzas from "../components/StatusBalanzas";
+import { useState, useEffect } from "react";
+import DashboardBalanzas from "../components/DashboardBalanzas";
+import DashboardBalanzasMobile from "../components/DashboardBalanzasMobile";
 import "./inicio.css";
 
 export default function Inicio() {
@@ -46,15 +47,10 @@ export default function Inicio() {
       </header>
 
       <section className="dashboard-section">
-        <StatusBalanzas balanzas={balanzasPending} />
+        <DashboardBalanzas balanzas={balanzasPending} />
       </section>
 
-      <section className="dashboard-section">
-        <Link to="/carga" className="menu-card">
-          <h3>Cargar Balanzas</h3>
-          <p>Sube archivos Excel y procesa información contable</p>
-        </Link>
-      </section>
+      
 
     </div>
   );
