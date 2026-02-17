@@ -5,7 +5,8 @@ import Navbar from "./components/Navbar";
 export default function App() {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  
+ 
+
   return (
     <>
       {token && <Navbar token={token} setToken={setToken} setUserId={setUserId} />}

@@ -1,12 +1,14 @@
 import React from "react";
 import './statusbalanzas.css';
+import CargaBalanza from "./CargaBalanza";
+
 const StatusBalanzas = ({ balanzas }) => {
     const balanzasPendientes = balanzas.filter(b => b.pendiente);
     const balanzasProcesadas = balanzas.filter(b => !b.pendiente);
 
     return (
         <div id="panel-balanzas" className="balanzas-panel">
-
+           
             {/* BALANZAS PENDIENTES */}
             <div className="balanza-card">
                 <div className="balanza-card-header">

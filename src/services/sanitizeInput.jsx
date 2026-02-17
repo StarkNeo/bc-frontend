@@ -16,8 +16,7 @@ export const sanitizePassword = (input) => {
         // Eliminar espacios al inicio y al final
         sanitized = sanitized.trim();
         // Evitar espacios dentro de la contraseña
-        sanitized = sanitized.replace(/\s/g, '');
-        
+        sanitized = sanitized.replace(/\s/g, '');       
 
         return sanitized;
 }

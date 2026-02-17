@@ -12,6 +12,14 @@ const getBalanzasPending = async () => {
     return request.data
 }
 
+const getUserStatus = async (token) => {
+    const request = await axios.post(`${baseUrl}/auth/check-auth`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    return request.data;
+}
+
+
 const uploadExcel = async (file, token) => {
     const request = await axios.post(`${baseUrl}/upload-excel`, file, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } })
     return request.data
@@ -56,4 +64,4 @@ const resetPassword = async (userId, newPassword) => {
 
 
 
-export default { getClients, uploadExcel, logout, fetchQrCode, verify2FASetup, verify2FA, resetPassword, login, getBalanzasPending }
+export default { getClients, uploadExcel, logout, fetchQrCode, verify2FASetup, verify2FA, resetPassword, login, getBalanzasPending, getUserStatus }
