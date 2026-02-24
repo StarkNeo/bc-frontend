@@ -26,9 +26,10 @@ export default function Verify2FA() {
       const res = await requests.verify2FA(userId, code);
        
       localStorage.setItem("token", res.token);
+      localStorage.setItem("nombre", res.nombre);
       setToken(res.token);
 
-      navigate("/inicio");
+      navigate("/inicio",{state: { nombre: res.nombre }});
     } catch (err) {
       setError(err.response?.data?.message || "Código incorrecto");
     }

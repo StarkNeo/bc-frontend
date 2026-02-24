@@ -7,13 +7,12 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
     const [file, setFile] = useState(null);
     const [statusMessage, setStatusMessage] = useState(null);
-    const { token } = useOutletContext();
     const navigate = useNavigate();
+    const token = useOutletContext();
     
     useEffect(() => {
         if(pendiente){
             setStatusMessage("Pendiente");
-
         }
         else{
             setStatusMessage("Procesada");
@@ -49,8 +48,8 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
         try {
             setStatusMessage('Procesando...');
             const res = await requests.uploadExcel(formData, token);
-            setStatusMessage(res.message);
-            alert(`Archivo procesado. ${res.rows} filas insertadas.`);
+            setStatusMessage(res.data.message);
+            alert(`Archivo procesado. ${res.data.rows} filas insertadas.`);
             setTimeout(() => {
                 setStatusMessage("Procesada");
             }, 2000);
@@ -58,11 +57,17 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
             window.location.reload();
             navigate("/inicio");
         } catch (error) {
-            console.log(error);
+            if(error.response.status === 401){
+                alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+                localStorage.removeItem("token");
+                navigate("/login");
+                return;
+            }
             setStatusMessage(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Error subiendo el archivo');
             setTimeout(() => {
                 setStatusMessage("Pendiente");
             }, 3000);
+            
         }
 
     };

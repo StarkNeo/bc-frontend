@@ -1,11 +1,11 @@
 /* NAV GENERAL */
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 50%;
   margin: auto;
-  max-width: 70%;
+  max-width: 100%;
   padding: 0.9rem 1.5rem;
   background: white;
   width: 100%;

@@ -9,6 +9,8 @@ import Verify2FA from './pages/Verify2FA';
 import Setup2FA from './pages/Setup2FA';
 import ResetPassword from './pages/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
+import CargaBalanza from './components/CargaBalanza';
+import Cumplimiento from './pages/Cumplimiento';
 
 
 const router = createBrowserRouter([
@@ -25,8 +27,8 @@ const router = createBrowserRouter([
                 element: <ProtectedRoute />,   // <-- BLOQUE PROTEGIDO
                 children: [
                     { path: "inicio", element: <Inicio /> },
-                    { path: "carga", element: <Carga /> },   // <-- AQUÍ DEBE ESTAR
-
+                    { path: "carga", element: <CargaBalanza /> },   // <-- AQUÍ DEBE ESTAR
+                    {path: "cumplimiento", element: <Cumplimiento />}   // <-- NUEVA RUTA PARA CUMPLIMIENTO
                 ]
             }
         ]

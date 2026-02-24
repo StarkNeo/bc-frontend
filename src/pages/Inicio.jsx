@@ -3,24 +3,15 @@ import requests from "../services/requests";
 import { useState, useEffect } from "react";
 import DashboardBalanzas from "../components/DashboardBalanzas";
 import DashboardBalanzasMobile from "../components/DashboardBalanzasMobile";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./inicio.css";
 
 export default function Inicio() {
+  const location = useLocation();
   const [balanzasPending, setBalanzasPending] = useState([]);
-  const [userName, setUserName] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      requests.getUserStatus(token).then(data => {
-        setUserName(data.user);
-      }).catch(error => {
-        console.error("Error obteniendo estado de autenticación:", error);
-      });
-    } else {
-      console.warn("No se encontró token en localStorage");
-    } 
-  }, []);
+  //const [userName, setUserName] = useState(null);
+  const nombre = location.state?.nombre || localStorage.getItem("nombre") || "Usuario";
+  
 
   useEffect(() => {
     requests.getBalanzasPending().then(data => {
@@ -35,7 +26,7 @@ export default function Inicio() {
     <div className="dashboard-container">
 
       <header className="dashboard-header">
-        <h1>Bienvenido {userName}</h1>
+        <h1>Bienvenido {nombre}</h1>
         <p className="dashboard-date">
           Hoy: {new Date().toLocaleDateString('es-ES', {
             weekday: 'long',

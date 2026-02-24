@@ -2,6 +2,17 @@ import axios from 'axios'
 const api = import.meta.env.VITE_API_URL;
 const baseUrl = api;
 
+const getCumplimientoData = async () => {
+    const request = await axios.get(`${baseUrl}/auth/cumplimiento`)
+    return request.data
+}
+
+const uploadCumplimientoFile = async (formData, token) => {
+    const request = await axios.post(`${baseUrl}/auth/upload`, formData, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } })
+    return request
+}
+
+
 const getClients = async () => {
     const request = await axios.get(`${baseUrl}/clientes`)
     return request.data
@@ -22,7 +33,8 @@ const getUserStatus = async (token) => {
 
 const uploadExcel = async (file, token) => {
     const request = await axios.post(`${baseUrl}/upload-excel`, file, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } })
-    return request.data
+    
+    return request
 }
 
 //Login.jsx code during login
@@ -64,4 +76,4 @@ const resetPassword = async (userId, newPassword) => {
 
 
 
-export default { getClients, uploadExcel, logout, fetchQrCode, verify2FASetup, verify2FA, resetPassword, login, getBalanzasPending, getUserStatus }
+export default { getClients, uploadExcel, logout, fetchQrCode, verify2FASetup, verify2FA, resetPassword, login, getBalanzasPending, getUserStatus, getCumplimientoData, uploadCumplimientoFile }

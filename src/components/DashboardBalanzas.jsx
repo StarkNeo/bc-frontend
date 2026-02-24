@@ -68,6 +68,7 @@ const DashboardBalanzas = ({ balanzas }) => {
                     <tbody>
                         {balanzasState.map((balanza) => (                                
                                     <CargaBalanza
+                                        key={balanza.id}
                                         rfc={balanza.rfc}
                                         nombre={balanza.nombre}
                                         mes={balanza.mes}

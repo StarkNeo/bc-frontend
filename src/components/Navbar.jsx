@@ -30,6 +30,7 @@ export default function Navbar({ token, setToken, setUserId }) {
       {token && (
         <ul className="nav-links desktop">
           <li><NavLink to="/inicio">Inicio</NavLink></li>
+          <li><NavLink to="/cumplimiento">Cumplimiento</NavLink></li>
           <li><Logout token={token} setToken={setToken} setUserId={setUserId} /></li>
         </ul>
       )}
@@ -38,7 +39,7 @@ export default function Navbar({ token, setToken, setUserId }) {
       {token && (
         <ul className={`nav-links mobile ${isOpen ? "open" : ""}`}>
           <li><NavLink to="/inicio" onClick={toggleMenu}>Inicio</NavLink></li>
-          <li><NavLink to="/carga" onClick={toggleMenu}>Carga</NavLink></li>
+          <li><NavLink to="/cumplimiento" onClick={toggleMenu}>Cumplimiento</NavLink></li>
           <li><Logout token={token} setToken={setToken} setUserId={setUserId} /></li>
         </ul>
       )}
