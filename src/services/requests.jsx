@@ -4,12 +4,12 @@ const microserviceUrl = import.meta.env.VITE_MICROSERVICE_URL;
 const baseUrl = api;
 
 const getCumplimientoData = async () => {
-    const request = await axios.get(`${microserviceUrl}/cumplimiento`)
+    const request = await axios.get(`${baseUrl}/cumplimiento`)
     return request.data
 }
 
 const uploadCumplimientoFile = async (formData, token) => {
-    const request = await axios.post(`${microserviceUrl}/upload`, formData, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } })
+    const request = await axios.post(`${baseUrl}/upload`, formData, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } })
     return request
 }
 
