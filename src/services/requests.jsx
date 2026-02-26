@@ -4,7 +4,7 @@ const microserviceUrl = import.meta.env.VITE_MICROSERVICE_URL;
 const baseUrl = api;
 
 const getCumplimientoData = async () => {
-    const request = await axios.get(`${baseUrl}/auth/cumplimiento`)
+    const request = await axios.get(`${microserviceUrl}/cumplimiento`)
     return request.data
 }
 
