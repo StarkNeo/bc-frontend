@@ -27,7 +27,7 @@ const CargaDeclaraciones = ({ token }) => {
             setSelectedFiles([]); // Clear selected files after upload
             setTimeout(() => {
                 window.location.reload(); // Refresh the page to show updated data after upload
-            }, 4000);
+            }, 2000);
         } catch (error) {
             console.error("Error uploading file:", error);
             alert("Error uploading file: " + (error.response?.data?.error || error.message));

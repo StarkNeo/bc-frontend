@@ -1,6 +1,5 @@
 import axios from 'axios'
 const api = import.meta.env.VITE_API_URL;
-const microserviceUrl = import.meta.env.VITE_MICROSERVICE_URL;
 const baseUrl = api;
 
 const getCumplimientoData = async () => {
