@@ -43,6 +43,12 @@
     font-weight: 600;
 }
 
+label.badge:hover {
+    cursor: pointer;
+    opacity: 0.9;
+    background-color: #e2e8f0;
+}
+
 .badge-pendiente {
     background: #fee2e2;
     color: #b91c1c;

@@ -7,23 +7,64 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
     const [file, setFile] = useState(null);
     const [statusMessage, setStatusMessage] = useState(null);
+    const [existeBalanza, setExisteBalanza] = useState(true);
+
     const navigate = useNavigate();
     const token = useOutletContext();
-    
+
     useEffect(() => {
-        if(pendiente){
+        if (pendiente) {
             setStatusMessage("Pendiente");
         }
-        else{
+        else {
             setStatusMessage("Procesada");
         }
     }, [pendiente]);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
-        
+
     };
 
+    const handleCheckboxChange = async (e) => {
+        const confirmed = confirm("¿Confirma que no existe balanza para este contribuyente? Si desactiva esta opción, no podrá cargar un archivo para este periodo y contribuyente.");
+        setExisteBalanza(confirmed ? e.target.checked : true);
+        if (!confirmed) {
+            return;
+        }
+        const formData = {
+            rfc,
+            mes,
+            ejercicio,
+            existeBalanza: confirmed ? e.target.checked : true
+        };
+        try {
+            setStatusMessage('Procesando...');
+            const res = await requests.saveEmptyBalanza(formData, token);
+            setStatusMessage(res.data.message);
+            alert(`Archivo procesado, Balanza guardada sin Excel.`);
+            setTimeout(() => {
+                setStatusMessage("Procesada");
+            }, 2000);
+            setFile(null);
+            window.location.reload();
+            navigate("/inicio");
+        } catch (error) {
+            if (error.response.status === 401) {
+                alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+                localStorage.removeItem("token");
+                navigate("/login");
+                return;
+            }
+            setStatusMessage(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Error subiendo el archivo');
+            setTimeout(() => {
+                setStatusMessage("Pendiente");
+            }, 3000);
+
+        }
+
+
+    }
 
     const handleUpload = async () => {
         if (!file) {
@@ -37,7 +78,7 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
             return;
 
         }
-        
+
 
         const formData = new FormData();
         formData.append('file', file);
@@ -57,7 +98,7 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
             window.location.reload();
             navigate("/inicio");
         } catch (error) {
-            if(error.response.status === 401){
+            if (error.response.status === 401) {
                 alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
                 localStorage.removeItem("token");
                 navigate("/login");
@@ -67,11 +108,12 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
             setTimeout(() => {
                 setStatusMessage("Pendiente");
             }, 3000);
-            
+
         }
 
     };
 
+    
     return (
 
         <tr>
@@ -82,19 +124,23 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
             <td>{nombre}</td>
             <td>{mes}</td>
             <td>{ejercicio}</td>
-            {pendiente && (
+            
+            {pendiente && existeBalanza && (
                 <>
+                <td>
+                <input type="checkbox" checked={existeBalanza} onChange={handleCheckboxChange} />
+            </td>
                     <td>
                         <input
                             type="file"
                             id="file"
                             accept=".xlsx,.xls"
                             onChange={handleFileChange}
-                            
+
                         />
                     </td>
                     <td>
-                        <svg onClick={handleUpload} width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg onClick={handleUpload} width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M3 15a4 4 0 0 1 4-4h1a5 5 0 0 1 10 1h1a3 3 0 0 1 0 6H7" />
                             <path d="M12 11v8" />
                             <path d="M9 14l3-3 3 3" />
@@ -102,7 +148,7 @@ const CargaBalanza = ({ rfc, nombre, mes, ejercicio, pendiente }) => {
                     </td>
                 </>
             )}
-            
+
 
 
             {/* status && (

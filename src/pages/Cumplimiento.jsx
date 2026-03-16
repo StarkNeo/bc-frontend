@@ -44,9 +44,9 @@ const Cumplimiento = () => {
     }, [razonFilter, mesFilter, ejercicioFilter, data]);
 
     // Extract unique values for dropdowns
-    const uniqueMeses = [...new Set(data.map(item => item.mes))];
-    const uniqueEjercicios = [...new Set(data.map(item => item.ejercicio))];
-    const uniqueRazones = [...new Set(data.map(item => item.razon_social))];
+    const uniqueMeses = [...new Set(data.map(item => item.mes))].sort((a, b) => a-b);
+    const uniqueEjercicios = [...new Set(data.map(item => item.ejercicio))].sort((a, b) => b-a);
+    const uniqueRazones = [...new Set(data.map(item => item.razon_social))].sort();
 
     return (
         <div style={{ padding: "2rem" }}>
